@@ -7,12 +7,14 @@ var tableauJeu = [
     [0,0,0,0],
 ];
 
-var tableauResultat = [
-    [1,4,3,4],
-    [1,2,3,2],
-    [7,8,6,5],
-    [8,7,5,6],
-];
+// var tableauResultat = [
+//     [1,4,3,4],
+//     [1,2,3,2],
+//     [7,8,6,5],
+//     [8,7,5,6],
+// ];
+
+var tableauResultat = genererTableauAleatoire();
 
 var oldSelection = [];
 var nombreImagesAffichage = 0;
@@ -90,4 +92,30 @@ function verificationImagesCorrespondent(bouton) {
             oldSelection = [ligne,colonne];
         }
     }
+}
+
+function genererTableauAleatoire() {
+    var tableau = [];
+
+    var nombreImagesPositionnerDansTableau = [0,0,0,0,0,0,0,0];
+
+    for(var i = 0 ; i < 4 ; i++) {
+        var ligne = [];
+        tableau.push(ligne);
+        for(var j = 0 ; j < 4 ; j++) {
+            var fin = false;
+            while(!fin) {
+                var randomImage = Math.floor(Math.random() * 8);
+                // Pour éviter d'avoir plus de deux fois la même image
+                if(nombreImagesPositionnerDansTableau[randomImage] < 2) {
+                    // Plus 1 car les valeurs pour les images dans le swicth case sont de 1 à 8 (pas de 0 à 7 dans le tableau nombreImagesPositionnerDansTableau)
+                    ligne.push(randomImage+1);
+                    nombreImagesPositionnerDansTableau[randomImage]++;
+                    fin = true;
+                }
+            }
+        }
+        tableau.push(ligne);
+    }
+    return tableau;
 }
